@@ -1,16 +1,7 @@
-import './team-selector'
+const Autocomplete = require('./autocomplete')
 
-let plteams = document.querySelector('#plteams')
-let template = document.querySelector('#cardTemplate')
+var config = {
+  url: 'http://localhost:3001/teams'
+}
 
-plteams.addEventListener('teamselected', async e => {
-  let teamResult = await window.fetch(`${plteams.getAttribute('src')}/teams/${e.detail.id}`)
-  let teamDetail = await teamResult.json()
-  document.querySelector('#cardContainer').innerHTML = ''
-
-  let card = template.content.cloneNode(true)
-  card.querySelector('#cardTitle').textContent = teamDetail.name
-  card.querySelector('#cardContent').textContent = teamDetail.nickname
-  card.querySelector('#cardLinks a').setAttribute('href', teamDetail.url)
-  document.querySelector('#cardContainer').appendChild(card)
-})
+new Autocomplete(document.querySelector('#teaminput'), config)
